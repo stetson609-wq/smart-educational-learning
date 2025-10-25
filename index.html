@@ -2,143 +2,170 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z'/%3E%3C/svg%3E">
-<title>Extensions</title>
+<title>Ingot</title>
+<link rel="icon" href="data:image/svg+xml,<svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path fill='white' d='M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-* { font-family: "Roboto", sans-serif; box-sizing: border-box; }
-:root { color-scheme: dark; }
-body { background: #202124; margin: 0; padding: 0; color: #e8eaed; }
-.nav { width: 100%; height: 55px; background: #292a2d; border-bottom: 1px solid rgba(255,255,255,.1); position: fixed; top:0; z-index:9; display:flex; align-items:center; justify-content:space-between; padding:0 20px; }
-.nav-title { font-size:22px; font-weight:500; }
-.nav-dev { color:#9aa0a6; font-size:13px; margin-right:10px; }
-.item-toggle { position:relative; cursor:pointer; }
-.item-bar { background:#8ab4f8; border-radius:8px; height:12px; left:3px; top:2px; position:absolute; width:28px; opacity:0.5; }
-.item-knob { background:#8ab4f8; border-radius:50%; display:block; height:16px; width:16px; position:relative; transform:translateX(18px); transition:transform .1s; box-shadow:0 1px 3px rgba(0,0,0,.4); }
-
-.items-main { padding:24px 60px 64px; margin-top:57px; }
-.items { display:grid; grid-gap:12px; grid-template-columns:repeat(auto-fill,400px); justify-content:center; }
-
-.item { height:auto; width:400px; background:#292a2d; border-radius:8px; box-shadow: rgba(0,0,0,.3) 0 1px 2px, rgba(0,0,0,.15) 0 2px 6px; overflow:hidden; }
-.item-main { display:flex; padding:16px 20px; }
-.item-img-wrapper { align-self:flex-start; display:flex; padding:6px; position:relative; }
-.item-content { flex:1; display:flex; flex-direction:column; margin-left:18px; }
-.item-title { color:#e8eaed; font-size:15px; font-weight:500; display:flex; align-items:center; gap:6px; }
-.item-description { color:#9aa0a6; font-size:13px; margin-top:4px; }
-.item-id {
-  color:#8ab4f8;
-  font-size:13px;
-  margin-top:8px;
-  cursor:pointer;
-  user-select:all;
-  transition:opacity .2s;
-}
-.item-id:hover { opacity:0.8; }
-.item-id:active { opacity:0.6; }
-
-/* Admin icon (real Chrome-style shield) */
-.admin-icon {
-  width:16px; height:16px;
-  display:inline-block;
-  background:url('data:image/svg+xml,%3Csvg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="none"%3E%3Cpath fill="%23ff5722" d="M12 2L3 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-9-4z"/%3E%3Cpath fill="white" d="M11 10h2v5h-2zm0 6h2v2h-2z"/%3E%3C/svg%3E') no-repeat center center / contain;
-  vertical-align:middle;
-  margin-left:3px;
-}
-.admin-icon[title]:hover::after {
-  content:attr(title);
+*{box-sizing:border-box;font-family:'Roboto',sans-serif;margin:0;padding:0}
+:root{color-scheme:dark}
+body{background:#202124;min-width:360px}
+.nav{width:100%;height:55px;background:#292a2d;border-bottom:1px solid rgba(255,255,255,.1);position:fixed;top:0;left:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 12px}
+.nav-title{color:#e8eaed;font-size:22px;font-weight:500}
+.nav-dev{color:#9aa0a6;font-size:13px;margin-right:8px}
+.items-main{padding:80px 60px 64px;display:flex;justify-content:center}
+.items{display:grid;grid-template-columns:repeat(auto-fill,400px);gap:12px;justify-content:center}
+.item{background:#292a2d;border-radius:8px;box-shadow:rgba(0,0,0,0.3) 0 1px 2px 0,rgba(0,0,0,0.15) 0 2px 6px 2px;display:flex;flex-direction:column;height:160px;cursor:grab;user-select:none;position:relative;transition:all .3s ease}
+body[dev] .item{height:208px}
+.item:hover{background:#323339}
+.item-main{display:flex;padding:16px 20px;flex:1;min-height:0;height:80px;transition:height .3s ease}
+body[dev] .item-main{height:125px}
+.item-img-wrapper{position:relative;margin-right:16px;display:flex;align-items:flex-start;padding:6px}
+.item-img{width:36px;height:36px;border-radius:6px;background:#202124;text-indent:-10000px}
+.item-img-source{align-items:center;background:#f1592b;border-radius:50%;box-shadow:0 1px 1px 0 rgba(0,0,0,.22),0 2px 2px 0 rgba(0,0,0,.12);display:flex;height:22px;justify-content:center;width:22px;margin-left:24px;margin-top:24px;position:absolute}
+.item-img-source-icon{pointer-events:none;display:block;height:16px;width:16px;color:white}
+.item-content{display:flex;flex:1;flex-direction:column;margin-left:24px;width:288px;overflow:hidden}
+.item-title-and-version{display:flex;align-items:center;flex-direction:row}
+.item-title{color:#e8eaed;font-size:13px;margin-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;margin-bottom:4px}
+.item-version,.item-id{color:#9aa0a6;font-size:13px;display:none;margin-bottom:4px}
+body[dev] .item-version,body[dev] .item-id{display:block}
+.item-description-overflow{height:84px;overflow:hidden}
+.item-description{color:#9aa0a6;font-size:13px;line-height:20px;overflow:hidden;margin-top:3px}
+.item-buttons{display:flex;justify-content:flex-end;align-items:center;padding:8px 38px;height:48px}
+.item-left-buttons{display:flex;flex-direction:row;align-items:center;flex:1;flex-basis:1e-9px}
+.item-left-button{border:1px solid #5f6368;border-radius:4px;color:#8ab4f8;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-weight:500;font-size:13px;line-height:20px;padding:8px 16px;margin-left:8px;min-width:5em;transition:background .2s ease}
+.item-left-button:hover{background:rgba(138,180,248,.08)}
+.item-left-button:active{background:rgba(138,180,248,.25)}
+.item-toggle{position:relative;cursor:pointer;width:36px;height:20px;border-radius:12px;background:#5f6368;transition:background .25s ease}
+.item-toggle-on{background:#8ab4f8}
+.item-toggle-knob{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:transform .25s ease}
+.item-toggle-on .item-toggle-knob{transform:translateX(16px)}
+.item-hidden{opacity:0;transform:scale(.95);height:0 !important;margin:0;padding:0;overflow:hidden;transition:all .25s ease}
+.patched,.wrongpage{text-align:center;font-weight:500;font-size:16px;margin-top:80px;color:#9aa0a6;display:none}
+.items[patched] .patched,.items[wrongpage] .wrongpage{display:block}
+.org-badge {
+  align-items:center;
+  background:#f28b25;
+  border-radius:50%;
+  box-shadow:0 1px 1px 0 rgba(0,0,0,.22),0 2px 2px 0 rgba(0,0,0,.12);
+  display:flex;
+  height:22px;
+  justify-content:center;
+  width:22px;
+  margin-left:24px;
+  margin-top:24px;
   position:absolute;
-  background:#333;
-  color:#fff;
-  font-size:11px;
-  padding:3px 6px;
-  border-radius:4px;
-  top:-28px; left:50%;
-  transform:translateX(-50%);
-  white-space:nowrap;
-  pointer-events:none;
-  opacity:0.9;
 }
-
-.toast {
-  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(30px);
-  background:#333; color:#fff; padding:10px 18px; border-radius:6px;
-  font-size:13px; opacity:0; pointer-events:none; transition:all .3s;
+.org-badge svg {
+  width:14px;
+  height:14px;
+  fill:#fff;
 }
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
-<body>
+<body dev="">
 <div class="nav">
-  <div class="nav-title">Exploits</div>
-  <div style="display:flex;align-items:center;">
+  <div class="nav-title">Tools</div>
+  <div class="nav-right">
     <div class="nav-dev">Developer mode</div>
-    <div class="item-toggle"><div class="item-bar"></div><div class="item-knob"></div></div>
+    <div class="item-toggle" id="devToggle" onclick="toggleDev(this)">
+      <div class="item-toggle-knob"></div>
+    </div>
   </div>
 </div>
 
 <div class="items-main">
   <div class="items" id="items">
-
-    <div class="item">
-      <div class="item-main">
-        <div class="item-content">
-          <div class="item-title">DevTools</div>
-          <div class="item-description">Click a link below to copy, then paste it into a new tab.</div>
-          <div class="item-id">devtools://devtools/bundled/devtools_app.html</div>
-          <div class="item-id">devtools://devtools/bundled/devtools_app.html?experiments=true&ws=rig.kxtz.dev/</div>
-        </div>
+    <div class="patched">Error: This may have been patched</div>
+    <div class="wrongpage">You are not on the correct page.<br>
+      <div class="item-left-buttons" style="justify-content:center;margin:20px">
+        <div class="item-left-button" onclick="window.location='https://chrome.google.com/webstorex'">Redirect</div>
       </div>
     </div>
 
-    <div class="item">
+    <!-- DevTools -->
+    <div class="item" data-link="https://example.com/link1" draggable="true">
       <div class="item-main">
+        <div class="item-img-wrapper">
+          <div class="item-img"></div>
+          <div class="item-img-source">
+            <svg class="item-img-source-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" fill="currentColor"/></svg>
+          </div>
+        </div>
         <div class="item-content">
-          <div class="item-title">chrome.management <span class="admin-icon" title="Installed by your administrator"></span></div>
-          <div class="item-description">Disable Extensions</div>
-          <div class="item-id" style="cursor:default; user-select:text;">filesystem:chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/temporary/index.html</div>
+          <div class="item-title-and-version"><div class="item-title">DevTools</div></div>
+          <div class="item-description-overflow"><div class="item-description">Drag this link into a new tab to open.</div></div>
+          <div class="item-id">LINK 1 HERE</div>
+          <div class="item-id">LINK 2 HERE</div>
         </div>
       </div>
+      <div class="item-buttons"><div class="item-toggle" onclick="toggleItem(this)"><div class="item-toggle-knob"></div></div></div>
     </div>
 
-    <div class="item">
+    <!-- chrome.management (with Chrome organization badge) -->
+    <div class="item" data-link="https://example.com/link2" draggable="true">
       <div class="item-main">
+        <div class="item-img-wrapper">
+          <div class="item-img"></div>
+          <div class="org-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 2L3 6v6c0 5 3.8 9.7 9 10 5.2-.3 9-5 9-10V6l-9-4zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+            </svg>
+          </div>
+        </div>
         <div class="item-content">
-          <div class="item-title">RigTools</div>
-          <div class="item-description">Extension/Devtools code execution</div>
-          <div class="item-id" style="cursor:default; user-select:text;">filesystem:chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/persistent/rigtools.html</div>
+          <div class="item-title-and-version"><div class="item-title">chrome.management</div></div>
+          <div class="item-description-overflow"><div class="item-description">Disable Extensions</div></div>
+          <div class="item-id">LINK HERE</div>
         </div>
       </div>
+      <div class="item-buttons"><div class="item-toggle" onclick="toggleItem(this)"><div class="item-toggle-knob"></div></div></div>
+    </div>
+
+    <!-- RigTools -->
+    <div class="item" data-link="https://example.com/link3" draggable="true">
+      <div class="item-main">
+        <div class="item-img-wrapper">
+          <div class="item-img"></div>
+          <div class="item-img-source">
+            <svg class="item-img-source-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" fill="currentColor"/></svg>
+          </div>
+        </div>
+        <div class="item-content">
+          <div class="item-title-and-version"><div class="item-title">RigTools</div><div class="item-version">2.0</div></div>
+          <div class="item-description-overflow">
+            <div class="item-description">Extension/Devtools code execution</div>
+            <div class="item-description">Tutorial Link Here</div>
+          </div>
+          <div class="item-id">LINK HERE</div>
+        </div>
+      </div>
+      <div class="item-buttons"><div class="item-toggle" onclick="toggleItem(this)"><div class="item-toggle-knob"></div></div></div>
     </div>
 
   </div>
 </div>
 
-<div class="toast" id="toast">Copied to clipboard!</div>
-
 <script>
-document.querySelectorAll('.item-id').forEach(el => {
-  if (el.textContent.startsWith('devtools://')) {
-    el.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(el.textContent.trim());
-        showToast('Copied! Paste into a new tab.');
-      } catch (err) {
-        console.error('Clipboard copy failed', err);
-        showToast('Failed to copy');
-      }
-    });
-  }
-});
-
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(window.toastTimeout);
-  window.toastTimeout = setTimeout(() => {
-    toast.classList.remove('show');
-  }, 2000);
+function toggleDev(el){
+  el.classList.toggle("item-toggle-on");
+  document.body.toggleAttribute('dev');
 }
+function toggleItem(el){
+  el.classList.toggle("item-toggle-on");
+  const item = el.closest('.item');
+  item.classList.toggle("item-hidden");
+}
+document.querySelectorAll('.item[draggable="true"]').forEach(item=>{
+  item.addEventListener('dragstart',e=>{
+    e.dataTransfer.setData('text/plain',item.dataset.link);
+    e.dataTransfer.effectAllowed='copy';
+    const ghost=item.cloneNode(true);
+    ghost.style.position='absolute';ghost.style.top='-1000px';ghost.style.left='-1000px';ghost.style.opacity='.7';
+    document.body.appendChild(ghost);
+    e.dataTransfer.setDragImage(ghost,ghost.offsetWidth/2,ghost.offsetHeight/2);
+    setTimeout(()=>document.body.removeChild(ghost),0);
+  });
+});
 </script>
 </body>
 </html>
