@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="data:image/svg+xml,&lt;svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'&gt;&lt;path fill='white' d='M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z'&gt;&lt;/path&gt;&lt;/svg&gt;">
-<title>Ingot</title>
+<title>Extensions</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
@@ -57,6 +57,21 @@ body[dev] .item-version, body[dev] .item-id { display:initial; }
 .items[patched], .items[wrongpage] { grid-template-columns:initial; }
 .items[patched] .patched { display:initial; }
 .items[wrongpage] .wrongpage { display:flow-root; }
+
+/* --- New minimal styles only for DevTools copy-text (no box, plain text look) --- */
+.copy-text {
+  color: rgb(138,180,248);
+  font-size:13px;
+  margin-top:5px;
+  cursor:pointer;
+  user-select:none; /* clicking copies, don't select */
+  background: none; /* explicitly no box/background */
+  padding: 0;
+  border: 0;
+  display: inline-block;
+  word-break: break-all;
+}
+.copy-text:hover { text-decoration: underline; }
 </style>
 </head>
 <body dev="">
@@ -79,10 +94,10 @@ body[dev] .item-version, body[dev] .item-id { display:initial; }
 <div class="items" id="items">
   <div class="patched">Error: This may have been patched</div>
   <div class="wrongpage">
-    You are not on the correct page.<br>
-    To use Ingot click the button below to redirect and run the bookmarklet again.
+    <br>
+    Sorry... this will never work for you, this has been discontinued.
     <div class="item-left-buttons" style="justify-content:center;margin:20px;">
-      <div class="item-left-button" onclick="window.location='https://chrome.google.com/webstorex'">Redirect</div>
+      <div class="item-left-button" onclick="window.location='https://classroom.page.gd'">Redirect</div>
     </div>
   </div>
 
@@ -94,7 +109,9 @@ body[dev] .item-version, body[dev] .item-id { display:initial; }
         <div class="item-description-overflow">
           <div class="item-description">Drag these links into the URL bar and hit enter.</div>
         </div>
-        <div class="item-id">devtools://devtools/bundled/devtools_app.html?experiments=true&ws=rig.kxtz.dev/</div>
+        <!-- DevTools entries: now plain text that copies on click; no box around them -->
+        <div class="copy-text" data-copy="devtools://devtools/bundled/devtools_app.html">devtools://devtools/bundled/devtools_app.html</div>
+        <div class="copy-text" data-copy="devtools://devtools/bundled/devtools_app.html?experiments=true&ws=rig.kxtz.dev/">devtools://devtools/bundled/devtools_app.html?experiments=true&ws=rig.kxtz.dev/</div>
       </div>
     </div>
   </div>
@@ -105,8 +122,9 @@ body[dev] .item-version, body[dev] .item-id { display:initial; }
       <div class="item-content">
         <div class="item-title-and-version"><div class="item-title">chrome.management</div></div>
         <div class="item-description-overflow">
-          <div class="item-description">Disabling Extensions</div>
+          <div class="item-description">Disable Extensions</div>
         </div>
+        <!-- Restored original plain item-id elements (draggable, with box NOT added back) -->
         <div class="item-id">filesystem:chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/temporary/index.html</div>
       </div>
     </div>
@@ -131,7 +149,7 @@ body[dev] .item-version, body[dev] .item-id { display:initial; }
 </div>
 
 <script>
-  // Make all item-id elements draggable as links
+  // Restore drag behavior for all .item-id elements (as in your original)
   document.querySelectorAll('.item-id').forEach(el => {
     el.setAttribute('draggable', 'true');
     el.addEventListener('dragstart', e => {
@@ -139,6 +157,72 @@ body[dev] .item-version, body[dev] .item-id { display:initial; }
       e.dataTransfer.setData('text/plain', el.textContent);
     });
   });
+
+  // Make copy-text elements copy their data-copy attribute to clipboard on click.
+  // They are plain text (no box) and not draggable/selectable. Clicking copies.
+  document.querySelectorAll('.copy-text').forEach(el => {
+    // ensure they are not draggable/selectable like the others
+    el.setAttribute('draggable', 'false');
+    el.addEventListener('click', async (ev) => {
+      const text = el.getAttribute('data-copy') || el.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        showTransientToast('Copied to clipboard — paste into a new tab.');
+      } catch (err) {
+        // fallback: select and attempt execCommand (older browsers)
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          // keep off-screen
+          ta.style.position = 'fixed';
+          ta.style.left = '-9999px';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showTransientToast('Copied to clipboard — paste into a new tab.');
+        } catch (err2) {
+          console.error('Copy failed', err, err2);
+          showTransientToast('Copy failed (see console).');
+        }
+      }
+    });
+  });
+
+  // lightweight transient toast near bottom center
+  (function createToastEl(){
+    const t = document.createElement('div');
+    t.id = '__smart_copy_toast';
+    t.style.position = 'fixed';
+    t.style.left = '50%';
+    t.style.bottom = '24px';
+    t.style.transform = 'translateX(-50%)';
+    t.style.background = '#333';
+    t.style.color = '#fff';
+    t.style.padding = '8px 12px';
+    t.style.borderRadius = '6px';
+    t.style.fontSize = '13px';
+    t.style.opacity = '0';
+    t.style.pointerEvents = 'none';
+    t.style.transition = 'opacity .18s, transform .18s';
+    document.body.appendChild(t);
+  })();
+
+  let __toast_timer = null;
+  function showTransientToast(msg){
+    const t = document.getElementById('__smart_copy_toast');
+    if(!t) return;
+    t.textContent = msg;
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(__toast_timer);
+    __toast_timer = setTimeout(() => {
+      t.style.opacity = '0';
+      t.style.transform = 'translateX(-50%) translateY(8px)';
+    }, 1700);
+  }
+
+  // Keep any other original behaviours intact (no other modifications)
 </script>
 </body>
 </html>
